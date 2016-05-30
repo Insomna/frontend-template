@@ -1,0 +1,35 @@
+@import (less) '../../bower_components/normalize.css/normalize.css';
+@import (less) '../../bower_components/owl-carousel/owl-carousel/owl.carousel.css';
+
+@import '_sprite.less';
+
+body{
+	
+}
+
+.pseudo{
+	position: absolute;
+	content: '';
+	display: inline-block;
+}
+
+.clearfix{
+	&::after{
+		display: table;
+		content: '';
+		clear: both;
+	}
+	> *{
+		float: left;
+	}
+}
+
+//MIXINS
+.list-reset(@mode: block){
+	margin-top: 0;
+	margin-bottom: 0;
+	padding: 0;
+	> li {
+		display: @mode;
+	}
+}

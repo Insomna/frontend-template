@@ -1,0 +1,23 @@
+{
+  "name": "frontend",
+  "description": "",
+  "main": "gulpfile.js",
+  "authors": [
+    "Insomna <shuvalov.art-site@yandex.ru>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/libs",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "normalize.css": "*",
+    "jquery": "2.*",
+    "owl-carousel": "1.*"
+  }
+}
