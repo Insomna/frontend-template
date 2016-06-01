@@ -26,7 +26,7 @@ var path = {
 		'style': 'src/less/main.less',
 		'sprite': 'src/less',
 		'img': 'src/img/*.png',
-		'content' : 'src/content/**/*.*'	
+		'content' : 'src/content/**/*.*'
 	},
 	'watch': {
 		'html': 'src/**/*.html',
@@ -38,6 +38,27 @@ var path = {
 }
 
 //Тут таски для сборки проекта
+gulp.task('build', [
+	'build:html',
+	'build:sprite',
+	'build:style',
+	'build:js',
+	'build:content'
+]);
+
+gulp.task('watch', function(){
+	gulp.watch(path.src.html, ['build:html']);
+	gulp.watch(path.src.img, ['build:sprite']);
+	gulp.watch(path.src.style, ['build:style']);
+	gulp.watch(path.src.content, ['build:content']);
+	gulp.watch(path.src.js, ['build:js']);
+});
+
+gulp.task('clear', function(cb){
+	rimraf(path.clear, cb);
+});
+
+
 gulp.task('build:html', function () {
 	gulp.src(path.src.html)
 		.pipe(rigger())
@@ -47,9 +68,7 @@ gulp.task('build:html', function () {
 gulp.task('build:js', function () {
 	gulp.src(path.src.js)
 		.pipe(rigger())
-		//.pipe(sourcemaps.init())
 		.pipe(uglify())
-		//.pipe(sourcemaps.write())
 		.pipe(gulp.dest(path.build.js));
 });
 
@@ -66,7 +85,6 @@ gulp.task('build:sprite', function() {
 
 gulp.task('build:style', function(){
 	gulp.src(path.src.style)
-		//.pipe(sourcemaps.init())
 		.pipe(less())
 		.pipe(autoprefixer({
 			browsers: ['last 10 versions', 'ie 8', 'ie 7'],
@@ -79,7 +97,6 @@ gulp.task('build:style', function(){
 			basename: 'style',
 			suffix: '.min'
 		}))
-		//.pipe(sourcemaps.write())
 		.pipe(gulp.dest(path.build.style));
 });
 
@@ -92,24 +109,4 @@ gulp.task('build:content', function () {
 			interlaced: true
 		}))
 		.pipe(gulp.dest(path.build.content));
-});
-
-gulp.task('watch', function(){
-	gulp.watch(path.src.html, ['build:html']);
-	gulp.watch(path.src.img, ['build:sprite']);
-	gulp.watch(path.src.style, ['build:style']);
-	gulp.watch(path.src.content, ['build:content']);
-	gulp.watch(path.src.js, ['build:js']);
-});
-
-gulp.task('build', [
-	'build:html',
-	'build:sprite',
-	'build:style',
-	'build:js',
-	'build:content'
-]);
-
-gulp.task('clear', function(cb){
-	rimraf(path.clear, cb);
 });
