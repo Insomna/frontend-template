@@ -28,12 +28,9 @@ var path = {
 		'style': 'src/less/main.less',
 		'sprite': 'src/less',
 		'img': 'src/img/*.png',
-<<<<<<< HEAD
 		'content' : 'src/content/**/*.*'
-=======
 		'content' : 'src/content/**/*.*',
 		'fonts': 'src/fonts/**/*.*'
->>>>>>> origin/master
 	},
 	'watch': {
 		'html': 'src/**/*.html',
@@ -59,18 +56,16 @@ var config = {
 
 
 //Тут таски для сборки проекта
-<<<<<<< HEAD
-=======
+
 
 //Главные 
->>>>>>> origin/master
 gulp.task('build', [
 	'build:html',
 	'build:sprite',
 	'build:style',
 	'build:js',
-<<<<<<< HEAD
-	'build:content'
+	'build:content',
+	'build: fonts'
 ]);
 
 gulp.task('watch', function(){
@@ -79,10 +74,8 @@ gulp.task('watch', function(){
 	gulp.watch(path.src.style, ['build:style']);
 	gulp.watch(path.src.content, ['build:content']);
 	gulp.watch(path.src.js, ['build:js']);
-=======
-	'build:content',
-	'build:fonts'
-]);
+	gulp.watch(path.src.fonts, ['fonts:js']);
+});
 
 gulp.task('watch', ['webserver'], function(){
 	gulp.watch(path.watch.html, ['build:html'])
@@ -91,18 +84,14 @@ gulp.task('watch', ['webserver'], function(){
 	gulp.watch(path.watch.content, ['build:content']);
 	gulp.watch(path.watch.js, ['build:js']);
 	gulp.watch(path.watch.fonts, ['build:fonts']);
->>>>>>> origin/master
 });
 
 gulp.task('clear', function(cb){
 	rimraf(path.clear, cb);
 });
 
-<<<<<<< HEAD
 
-=======
 //Узкоспециализированные
->>>>>>> origin/master
 gulp.task('build:html', function () {
 	gulp.src(path.src.html)
 		.pipe(rigger())
@@ -114,12 +103,8 @@ gulp.task('build:js', function () {
 	gulp.src(path.src.js)
 		.pipe(rigger())
 		.pipe(uglify())
-<<<<<<< HEAD
-		.pipe(gulp.dest(path.build.js));
-=======
 		.pipe(gulp.dest(path.build.js))
 		.pipe(browserSync.stream());
->>>>>>> origin/master
 });
 
 gulp.task('build:sprite', function() {
@@ -147,12 +132,8 @@ gulp.task('build:style', function(){
 			basename: 'style',
 			suffix: '.min'
 		}))
-<<<<<<< HEAD
-		.pipe(gulp.dest(path.build.style));
-=======
 		.pipe(gulp.dest(path.build.style))
 		.pipe(browserSync.stream());
->>>>>>> origin/master
 });
 
 gulp.task('build:content', function () {
@@ -163,10 +144,7 @@ gulp.task('build:content', function () {
 			use: [pngquant()],
 			interlaced: true
 		}))
-<<<<<<< HEAD
-		.pipe(gulp.dest(path.build.content));
-});
-=======
+		.pipe(gulp.dest(path.build.content))
 		.pipe(gulp.dest(path.build.content))
 		.pipe(browserSync.stream());
 });
@@ -180,4 +158,3 @@ gulp.task('build:fonts', function() {
 gulp.task('webserver', function () {
 	browserSync.init(config);
 });
->>>>>>> origin/master
