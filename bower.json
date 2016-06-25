@@ -17,6 +17,6 @@
   "dependencies": {
     "normalize.css": "*",
     "jquery": "2.*",
-    "owl-carousel": "1.*"
+    "font-awesome": "^4.6.3"
   }
 }

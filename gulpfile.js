@@ -2,7 +2,6 @@
 var gulp         = require('gulp'),
 	less         = require('gulp-less'),
 	autoprefixer = require('gulp-autoprefixer'),
-	spritesmith  = require('gulp.spritesmith'),
 	cssmin       = require('gulp-cssmin'),
 	rename       = require('gulp-rename'),
 	imagemin     = require('gulp-imagemin'),
@@ -27,16 +26,13 @@ var path = {
 		'js': 'src/js/*.js',
 		'style': 'src/less/main.less',
 		'sprite': 'src/less',
-		'img': 'src/img/*.png',
-		'content' : 'src/content/**/*.*'
 		'content' : 'src/content/**/*.*',
-		'fonts': 'src/fonts/**/*.*'
+		'fonts': 'bower_components/font-awesome/fonts/*.*'
 	},
 	'watch': {
 		'html': 'src/**/*.html',
 		'js': 'src/js/**/*.js',
 		'style': 'src/less/*.less',
-		'img': 'src/img/*.png',
 		'fonts': 'src/fonts/**/*.*'
 	},
 	clear: './dist'
@@ -50,7 +46,7 @@ var config = {
 	tunnel: false,
 	host: 'localhost',
 	port: 9000,
-	logPrefix: "wm"
+	logPrefix: "mc"
 };
 
 
@@ -61,25 +57,22 @@ var config = {
 //Главные 
 gulp.task('build', [
 	'build:html',
-	'build:sprite',
 	'build:style',
 	'build:js',
 	'build:content',
-	'build: fonts'
+	'build:fonts'
 ]);
 
 gulp.task('watch', function(){
 	gulp.watch(path.src.html, ['build:html']);
-	gulp.watch(path.src.img, ['build:sprite']);
 	gulp.watch(path.src.style, ['build:style']);
 	gulp.watch(path.src.content, ['build:content']);
 	gulp.watch(path.src.js, ['build:js']);
-	gulp.watch(path.src.fonts, ['fonts:js']);
+	gulp.watch(path.src.fonts, ['build:fonts']);
 });
 
 gulp.task('watch', ['webserver'], function(){
 	gulp.watch(path.watch.html, ['build:html'])
-	gulp.watch(path.watch.img, ['build:sprite']);
 	gulp.watch(path.watch.style, ['build:style'])
 	gulp.watch(path.watch.content, ['build:content']);
 	gulp.watch(path.watch.js, ['build:js']);
@@ -105,17 +98,6 @@ gulp.task('build:js', function () {
 		.pipe(uglify())
 		.pipe(gulp.dest(path.build.js))
 		.pipe(browserSync.stream());
-});
-
-gulp.task('build:sprite', function() {
-	var spriteData = gulp.src(path.src.img).pipe(spritesmith({
-		imgName: 'sprite.png',
-		cssName: '_sprite.less',
-		algorithm: 'binary-tree'
-		}));
-
-	spriteData.img.pipe(gulp.dest(path.build.style));
-	spriteData.css.pipe(gulp.dest(path.src.sprite)).pipe(browserSync.reload);
 });
 
 gulp.task('build:style', function(){
@@ -150,9 +132,9 @@ gulp.task('build:content', function () {
 });
 
 gulp.task('build:fonts', function() {
-    gulp.src(path.src.fonts)
-        .pipe(gulp.dest(path.build.fonts))
-        .pipe(browserSync.stream());
+	gulp.src(path.src.fonts)
+		.pipe(gulp.dest(path.build.fonts))
+		.pipe(browserSync.stream());
 });
 
 gulp.task('webserver', function () {
